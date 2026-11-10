@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Reader, Recall & Game Akreditasi Kemenkes 2025</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        #fc-inner { transition: transform 0.6s ease; transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
+        #fc-inner.is-flipped { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-teal-500 selection:text-white">
+
+    <!-- Header / Navbar Mobile-First dengan Hamburger Menu -->
+    <header class="bg-blue-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-teal-500 text-white w-9 h-9 rounded-xl flex items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-brain text-base"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-sm leading-tight">Akreditasi Kemenkes 2025</h1>
+                    <p class="text-[10px] text-teal-200">Kepdirjen SDMK No. 131/2025</p>
+                </div>
+            </div>
+            <!-- Tombol Hamburger -->
+            <button onclick="toggleMenu()" id="hamburger-btn" class="w-10 h-10 bg-blue-800 hover:bg-blue-700 rounded-xl flex items-center justify-center transition active:scale-95">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Menu Dropdown Hamburger -->
+        <div id="mobile-menu" class="hidden bg-blue-950 border-t border-blue-800 px-4 py-3 space-y-2 text-sm shadow-xl">
+            <button onclick="switchTab('menu'); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-home text-teal-400 w-5"></i> Beranda Utama
+            </button>
+            <button onclick="switchTab('materi'); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-book-open text-teal-400 w-5"></i> Materi Bab I-VIII + Audio Reader
+            </button>
+            <button onclick="switchTab('flashcard'); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-clone text-teal-400 w-5"></i> Flashcard Recall (20 Kartu)
+            </button>
+            <button onclick="startQuiz(); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-teal-400 w-5"></i> Kuis Kilat (35 Soal Lengkap)
+            </button>
+            <button onclick="switchTab('target'); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-bullseye text-teal-400 w-5"></i> Target &amp; Keberhasilan RSUD
+            </button>
+            <button onclick="switchTab('panduan'); toggleMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-blue-900 transition flex items-center gap-3">
+                <i class="fa-solid fa-circle-info text-teal-400 w-5"></i> Sanksi &amp; Matriks SIAKSI
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-md w-full mx-auto p-4 flex-1 flex flex-col justify-start pb-12">
+
+        <!-- 1. BERANDA UTAMA -->
+        <div id="tab-menu" class="space-y-4">
+            <div class="bg-gradient-to-br from-blue-900 to-blue-800 text-white p-6 rounded-2xl shadow-md space-y-3 relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-blue-700/30 text-8xl pointer-events-none">
+                    <i class="fa-solid fa-hospital-user"></i>
+                </div>
+                <div class="inline-block bg-teal-500/20 text-teal-300 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                    Portal Persiapan Diklat &amp; Litbang
+                </div>
+                <h2 class="text-xl font-bold leading-snug">Kuasai Regulasi Akreditasi Kemenkes 2025</h2>
+                <p class="text-xs text-blue-100 leading-relaxed">
+                    Dilengkapi fitur audio reader bersuara, 20 kartu recall interaktif, 35 soal kuis bab I-VIII dengan skor real-time, serta panduan keberhasilan untuk RSUD Dr. Wahidin Sudiro Husodo.
+                </p>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="startQuiz()" class="flex-1 py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Mulai Kuis 35 Soal
+                    </button>
+                    <button onclick="switchTab('materi')" class="py-3 px-4 bg-blue-700 hover:bg-blue-600 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">
+                        <i class="fa-solid fa-book"></i> Materi Audio
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats & High Score Card -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-2 gap-4 text-center">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Skor Tertinggi (High Score)</div>
+                    <div id="stat-high-score" class="text-lg font-extrabold text-blue-600 mt-0.5">0 Poin</div>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Pencapaian Level</div>
+                    <div id="stat-badge" class="text-xs font-bold text-teal-600 mt-1 truncate">Pemula Regulasi</div>
+                </div>
+            </div>
+
+            <!-- Menu Pembelajaran Lengkap -->
+            <div class="space-y-2.5">
+                <div class="text-xs font-bold text-slate-500 px-1 uppercase tracking-wider">Menu Pembelajaran Lengkap</div>
+                
+                <button onclick="switchTab('materi')" class="w-full bg-white hover:bg-slate-50 p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                            <i class="fa-solid fa-headphones text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-sm text-slate-900">Materi Lengkap Bab I - VIII + Suara</div>
+                            <div class="text-[11px] text-slate-500">Dilengkapi fitur Audio Reader &amp; Pengatur Kecepatan</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                </button>
+
+                <button onclick="switchTab('flashcard')" class="w-full bg-white hover:bg-slate-50 p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                            <i class="fa-solid fa-clone text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-sm text-slate-900">Flashcard Recall (20 Kartu)</div>
+                            <div class="text-[11px] text-slate-500">Latihan memori poin penting regulasi</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                </button>
+
+                <button onclick="startQuiz()" class="w-full bg-white hover:bg-slate-50 p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                            <i class="fa-solid fa-bolt text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-sm text-slate-900">Kuis Kilat (35 Soal Lengkap)</div>
+                            <div class="text-[11px] text-slate-500">Uji pemahaman Bab I sampai VIII dengan skor real-time</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                </button>
+
+                <button onclick="switchTab('target')" class="w-full bg-white hover:bg-slate-50 p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                            <i class="fa-solid fa-bullseye text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-sm text-slate-900">Target &amp; Keberhasilan RSUD</div>
+                            <div class="text-[11px] text-slate-500">Peta jalan pencapaian standar Paripurna</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                </button>
+
+                <button onclick="switchTab('panduan')" class="w-full bg-white hover:bg-slate-50 p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                            <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-bold text-sm text-slate-900">Panduan &amp; Matriks Sanksi Warna SIAKSI</div>
+                            <div class="text-[11px] text-slate-500">Zona warna Hijau sampai Hitam (Bab VII)</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. MATERI LENGKAP BAB I - VIII + AUDIO READER -->
+        <div id="tab-materi" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200">
+                <button onclick="stopAudioAndSwitch('menu')" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center gap-1.5"><i class="fa-solid fa-arrow-left"></i> Menu</button>
+                <span class="text-xs font-bold text-blue-900 uppercase">Materi Lengkap + Audio</span>
+            </div>
+
+            <!-- Kontrol Audio Reader -->
+            <div class="bg-blue-900 text-white p-4 rounded-2xl shadow-md space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-volume-high text-teal-400"></i>
+                        <span class="text-xs font-bold uppercase tracking-wider">Audio Reader Bab I - VIII</span>
+                    </div>
+                    <span id="audio-status" class="text-[10px] bg-blue-800 px-2 py-0.5 rounded text-teal-200">Siap Ditekan</span>
+                </div>
+                
+                <div class="flex gap-2">
+                    <button onclick="playAudio()" class="flex-1 py-2.5 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-xl text-xs shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> Putar Suara
+                    </button>
+                    <button onclick="pauseAudio()" class="py-2.5 px-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl text-xs shadow transition">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+                    <button onclick="stopAudio()" class="py-2.5 px-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-xs shadow transition">
+                        <i class="fa-solid fa-stop"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] pt-1 border-t border-blue-800">
+                    <span>Kecepatan Suara: <strong id="speed-label">1.0x</strong></span>
+                    <input type="range" id="speech-rate" min="0.5" max="2.0" step="0.1" value="1.0" class="w-32 accent-teal-400" oninput="updateRate(this.value)">
+                </div>
+            </div>
+
+            <!-- Teks Materi -->
+            <div id="materi-text-container" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 text-xs leading-relaxed text-slate-700">
+                <div class="border-b pb-3">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab I: Pendahuluan &amp; Dasar Hukum</h3>
+                    <p>Berdasarkan UU No. 17 Tahun 2023 Pasal 258 dan PP No. 28 Tahun 2024 Pasal 669, akreditasi lembaga penyelenggara pelatihan bidang kesehatan dilakukan oleh Pemerintah Pusat (Kemenkes c.q. Direktorat Mutu SDM Kesehatan). Bertujuan menjamin mutu penyelenggaraan pelatihan dan peningkatan kompetensi tenaga medis serta tenaga kesehatan.</p>
+                </div>
+
+                <div class="border-b pb-3">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab II: Penyelenggara Akreditasi</h3>
+                    <p>Kemenkes membentuk 3 tim penilai: <strong>Tim Sekretariat</strong> (verifikasi dokumen dalam SLA 7 hari kerja), <strong>Tim Asesor</strong> (penilaian teknis, telusur dokumen, wawancara, dan visitasi luring/daring), serta <strong>Tim Penilai Akhir / TPA</strong> (sidang pleno untuk menetapkan nilai dan status akreditasi).</p>
+                </div>
+
+                <div class="border-b pb-3">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab III: Komponen &amp; Bobot Persyaratan (100%)</h3>
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><strong>Pelayanan Pelatihan (55%):</strong> Unsur Kurikulum &amp; KAK (25%) serta Sumber Daya Manusia (30%) yang wajib mencakup Pimpinan, Penyelenggara Pelatihan, Pelatih, dan <strong>Pengelola Sistem Informasi</strong>.</li>
+                        <li><strong>Administrasi &amp; Manajemen (30%):</strong> Legalitas kelembagaan (SK/Akta Notaris KBLI 85494), Renstra minimal 3 tahunan, Panduan Mutu, serta dokumen pelaksanaan <strong>Audit Mutu Internal (AMI)</strong>.</li>
+                        <li><strong>Pelayanan Penunjang (15%):</strong> Sarana prasarana minimal (ruang kerja pimpinan, ruang staf, dan ruang kelas/pembelajaran).</li>
+                    </ul>
+                </div>
+
+                <div class="border-b pb-3">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab IV - V: Mekanisme SIAKSI, SLA &amp; Kerja Sama</h3>
+                    <p>Pengajuan akreditasi menggunakan aplikasi <strong>SIAKSI</strong> (siaksi.kemkes.go.id). Level akreditasi (masa berlaku 5 tahun):</p>
+                    <ul class="list-disc pl-4 space-y-1 mt-1">
+                        <li><strong>Paripurna (89-100):</strong> Mandiri Lokal, Nasional, dan Internasional.</li>
+                        <li><strong>Madya (78-88,99):</strong> Mandiri Lokal &amp; Nasional (Internasional wajib kerja sama dengan Paripurna).</li>
+                        <li><strong>Dasar (67-77,99):</strong> Mandiri skala Lokal saja.</li>
+                    </ul>
+                    <p class="mt-1">Ketentuan Kerja Sama: Lembaga belum terakreditasi wajib bekerja sama dengan lembaga terakreditasi dengan batas maksimal <em>institusional fee</em> (misal Rp500.000 untuk 1-100 peserta).</p>
+                </div>
+
+                <div class="border-b pb-3">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab VI: Pemantauan, Evaluasi &amp; Aturan Flyer</h3>
+                    <p>Pengawasan berkala melalui <strong>Plataran Sehat &amp; SIAKPEL</strong> (registrasi pelatihan H-3, peningkatan kompetensi H-30). Aturan ketat Flyer:</p>
+                    <ul class="list-disc pl-4 space-y-1 mt-1">
+                        <li>Wajib mencantumkan logo Kemenkes di kiri atas dan logo lembaga di sebelahnya.</li>
+                        <li>Nilai SKP sesuai kolegium (tidak akumulatif).</li>
+                        <li><strong>Dilarang keras menampilkan diskon atau potongan harga.</strong></li>
+                        <li>Wajib menggunakan rekening resmi institusi (dilarang rekening pribadi).</li>
+                        <li>Wajib menyelenggarakan pelatihan gratis minimal <strong>2x setahun</strong> (+10% nilai penunjang).</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-900 text-sm mb-1 text-blue-900">Bab VII - VIII: Sanksi Akun SIAKSI &amp; Penutup</h3>
+                    <p>Evaluasi kepatuhan administrasi (60%) dan kepuasan pelanggan (40%) menghasilkan kode warna di SIAKSI:</p>
+                    <ul class="list-disc pl-4 space-y-1 mt-1">
+                        <li><strong>Hijau (91-100%):</strong> Sesuai ketentuan, tanpa sanksi.</li>
+                        <li><strong>Kuning (71-90,99%):</strong> Sanksi SP 1.</li>
+                        <li><strong>Jingga (51-70,99%):</strong> Sanksi SP 2.</li>
+                        <li><strong>Merah (41-50,99%):</strong> Penurunan Level Akreditasi.</li>
+                        <li><strong>Hitam (0-40,99%):</strong> Pembekuan Akun Plataran Sehat (6-12 bulan) atau Pencabutan Status Akreditasi.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button onclick="stopAudioAndSwitch('flashcard')" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">
+                Lanjut ke Flashcard Recall <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+
+        <!-- 3. MODE FLASHCARD (20 KARTU - FIXED 3D FLIP & PROPER START FACE) -->
+        <div id="tab-flashcard" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200">
+                <button onclick="stopAudioAndSwitch('menu')" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center gap-1.5"><i class="fa-solid fa-arrow-left"></i> Menu</button>
+                <span id="fc-counter" class="text-xs font-bold bg-teal-100 text-teal-800 px-2.5 py-1 rounded-full">Kartu 1 dari 20</span>
+            </div>
+
+            <!-- Kartu 3D Flip -->
+            <div class="perspective-1000 w-full h-72 cursor-pointer select-none" onclick="flipCard()">
+                <div id="fc-inner">
+                    <!-- Sisi Depan -->
+                    <div class="absolute inset-0 w-full h-full bg-white border-2 border-slate-200 rounded-2xl p-6 flex flex-col justify-between backface-hidden">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-bold text-teal-600 uppercase tracking-wider bg-teal-50 px-2.5 py-1 rounded-full"><i class="fa-regular fa-lightbulb mr-1"></i> Pertanyaan Recall</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Ketuk untuk lihat jawaban</span>
+                        </div>
+                        <div id="fc-front-text" class="text-sm sm:text-base font-bold text-slate-900 text-center my-auto px-2 leading-relaxed">
+                            Memuat pertanyaan...
+                        </div>
+                        <div class="text-center text-[11px] text-blue-600 font-semibold bg-blue-50 py-1.5 rounded-xl">
+                            <i class="fa-solid fa-rotate mr-1"></i> Ketuk kartu untuk balik
+                        </div>
+                    </div>
+                    <!-- Sisi Belakang -->
+                    <div class="absolute inset-0 w-full h-full bg-blue-900 text-white rounded-2xl p-6 flex flex-col justify-between backface-hidden" style="transform: rotateY(180deg);">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-bold text-teal-300 uppercase tracking-wider bg-blue-800 px-2.5 py-1 rounded-full"><i class="fa-solid fa-check-circle mr-1"></i> Jawaban &amp; Penjelasan</span>
+                            <span class="text-[10px] text-blue-200 font-medium">Ketuk untuk soal lain</span>
+                        </div>
+                        <div id="fc-back-text" class="text-xs sm:text-sm text-slate-100 text-center my-auto overflow-y-auto max-h-36 px-2 leading-relaxed font-medium">
+                            Memuat jawaban...
+                        </div>
+                        <div class="text-center text-[11px] text-teal-300 font-semibold bg-blue-800 py-1.5 rounded-xl">
+                            <i class="fa-solid fa-rotate mr-1"></i> Ketuk untuk kembali ke pertanyaan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kontrol Flashcard -->
+            <div class="flex gap-3">
+                <button onclick="prevCard()" class="flex-1 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl text-xs shadow-sm transition active:scale-95"><i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya</button>
+                <button onclick="nextCard()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">Selanjutnya <i class="fa-solid fa-chevron-right ml-1"></i></button>
+            </div>
+            
+            <button onclick="startQuiz()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">
+                <i class="fa-solid fa-bolt mr-1"></i> Langsung Uji Kuis 35 Soal
+            </button>
+        </div>
+
+        <!-- 4. TARGET & KEBERHASILAN AKREDITASI -->
+        <div id="tab-target" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200">
+                <button onclick="stopAudioAndSwitch('menu')" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center gap-1.5"><i class="fa-solid fa-arrow-left"></i> Menu</button>
+                <span class="text-xs font-bold text-blue-900 uppercase">Target &amp; Keberhasilan RSUD</span>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 text-xs leading-relaxed text-slate-700">
+                <div class="bg-gradient-to-r from-blue-50 to-teal-50 p-4 rounded-xl border border-blue-100 space-y-2">
+                    <h3 class="font-bold text-sm text-blue-900"><i class="fa-solid fa-star text-amber-500 mr-1.5"></i> Visi &amp; Sasaran Utama Diklat RSUD</h3>
+                    <p class="text-slate-600 leading-relaxed">Mengingat RSUD Dr. Wahidin Sudiro Husodo telah berada di level <strong>Paripurna</strong>, fokus utama penugasan Tim Pengembang Diklat &amp; Litbang adalah menjaga kepatuhan mutu, integrasi sistem digital nakes, dan memperluas kolaborasi pelatihan.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs">1</span>
+                            <span>Mempertahankan Akreditasi Paripurna (Skor 89,00 - 100)</span>
+                        </div>
+                        <p class="text-slate-500 pl-8">Memastikan seluruh administrasi, kurikulum pelatihan, dan instrumen AMI (Audit Mutu Internal) diperbarui berkala tanpa pelanggaran.</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-6 h-6 bg-teal-600 text-white rounded-full flex items-center justify-center text-xs">2</span>
+                            <span>Optimalisasi Integrasi Plataran Sehat &amp; SIAKPEL</span>
+                        </div>
+                        <p class="text-slate-500 pl-8">Menjamin seluruh penyelenggaraan diklat tercatat rapi di LMS Kemenkes dengan kesesuaian JPL, kuota peserta, dan SKP kolegium.</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs">3</span>
+                            <span>Zero Penalty (Zona Hijau SIAKSI Berkelanjutan)</span>
+                        </div>
+                        <p class="text-slate-500 pl-8">Menghindari sanksi SP1, SP2, hingga pembekuan akun dengan mematuhi aturan flyer promosi (tanpa diskon dan rekening resmi).</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs">4</span>
+                            <span>Pelatihan Gratis &amp; Pengabdian Masyarakat (2x Setahun)</span>
+                        </div>
+                        <p class="text-slate-500 pl-8">Memenuhi kewajiban diklat non-berbayar untuk mendapatkan tambahan 10% nilai penunjang mutu institusi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="stopAudioAndSwitch('menu')" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">
+                Kembali ke Beranda
+            </button>
+        </div>
+
+        <!-- 5. KUIS KILAT (35 SOAL LENGKAP - DENGAN SKOR REAL-TIME & HIGH SCORE) -->
+        <div id="tab-quiz" class="hidden space-y-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <!-- Progress, Skor Live, & Timer -->
+                <div class="flex justify-between items-center text-xs font-semibold text-slate-500">
+                    <span id="quiz-progress">Soal 1 dari 35</span>
+                    <span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-bold">Skor: <span id="live-score">0</span></span>
+                    <span id="quiz-timer" class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full"><i class="fa-solid fa-stopwatch mr-1"></i> <span id="time-left">20</span> dtk</span>
+                </div>
+                <!-- Pertanyaan -->
+                <h3 id="quiz-question" class="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                    Pertanyaan kuis akan muncul di sini...
+                </h3>
+                <!-- Pilihan Jawaban -->
+                <div id="quiz-options" class="space-y-2 pt-1">
+                    <!-- Tombol Opsi via JS -->
+                </div>
+                <!-- Umpan Balik -->
+                <div id="quiz-feedback" class="hidden p-3 rounded-xl text-xs mt-3 leading-relaxed"></div>
+            </div>
+
+            <div class="flex justify-between items-center px-1">
+                <button onclick="stopAudioAndSwitch('menu')" class="text-xs font-semibold text-slate-500 hover:text-slate-800"><i class="fa-solid fa-arrow-left mr-1"></i> Keluar Kuis</button>
+                <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">Lanjut Soal <i class="fa-solid fa-arrow-right mr-1"></i></button>
+            </div>
+        </div>
+
+        <!-- 6. HASIL KUIS -->
+        <div id="tab-result" class="hidden space-y-4">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center space-y-3">
+                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto text-xl shadow-sm">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Kuis Selesai!</h3>
+                <p class="text-xs text-slate-600">Evaluasi performa ingatan regulasi Kemenkes 2025:</p>
+                <div class="py-2">
+                    <div id="result-score" class="text-3xl font-extrabold text-blue-600">0 Poin</div>
+                    <div class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Total Skor Anda (Maks 100)</div>
+                </div>
+                <div id="result-badge-box" class="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-800 text-xs font-semibold">
+                    Level: <span id="result-badge-name">Ahli Regulasi</span>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="startQuiz()" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95"><i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Kuis</button>
+                    <button onclick="stopAudioAndSwitch('menu')" class="py-3 px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-xl text-xs transition">Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. PANDUAN & SANKSI WARNA SIAKSI -->
+        <div id="tab-panduan" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200">
+                <button onclick="stopAudioAndSwitch('menu')" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center gap-1.5"><i class="fa-solid fa-arrow-left"></i> Menu</button>
+                <span class="text-xs font-bold text-blue-900 uppercase">Matriks Sanksi SIAKSI</span>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 text-xs leading-relaxed text-slate-700">
+                <h3 class="font-bold text-slate-900 text-sm text-blue-900">Panduan Warna Akun SIAKSI (Bab VII)</h3>
+                <p>Kemenkes memonitor kepatuhan administrasi (60%) dan kepuasan pelanggan (40%) secara real-time:</p>
+                
+                <div class="space-y-2 pt-1">
+                    <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+                        <strong class="text-emerald-800">Hijau (91% - 100%):</strong> Sesuai ketentuan, berkinerja sangat baik. Tanpa sanksi.
+                    </div>
+                    <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-xl">
+                        <strong class="text-amber-800">Kuning (71% - 90,99%):</strong> Diberikan sanksi Teguran Tertulis / Surat Peringatan 1 (SP1).
+                    </div>
+                    <div class="p-2.5 bg-orange-50 border border-orange-200 rounded-xl">
+                        <strong class="text-orange-800">Jingga (51% - 70,99%):</strong> Diberikan sanksi Surat Peringatan 2 (SP2).
+                    </div>
+                    <div class="p-2.5 bg-rose-50 border border-rose-200 rounded-xl">
+                        <strong class="text-rose-800">Merah (41% - 50,99%):</strong> Disanksi berupa Penurunan Level Akreditasi.
+                    </div>
+                    <div class="p-2.5 bg-slate-900 text-white rounded-xl">
+                        <strong class="text-slate-100">Hitam (0% - 40,99%):</strong> Sanksi berat Pembekuan Akun Plataran Sehat (6-12 bulan) hingga Pencabutan Status Akreditasi.
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="stopAudioAndSwitch('menu')" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-xl text-xs shadow transition active:scale-95">
+                Kembali ke Beranda
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3 text-[10px] text-slate-400 border-t border-slate-200 bg-white mt-auto">
+        Audio Reader &amp; Game Recall Akreditasi Kemenkes 2025 &bull; Mobile-First Ready
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Toggle Hamburger Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if(menu) menu.classList.toggle('hidden');
+        }
+
+        // Switch Tabs & Stop Audio
+        function switchTab(tabId) {
+            stopAudio();
+            ['menu', 'materi', 'flashcard', 'target', 'quiz', 'result', 'panduan'].forEach(t => {
+                const el = document.getElementById('tab-' + t);
+                if(el) el.classList.add('hidden');
+            });
+            const targetEl = document.getElementById('tab-' + tabId);
+            if(targetEl) targetEl.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if(tabId === 'flashcard') {
+                renderFlashcard();
+            }
+        }
+
+        function stopAudioAndSwitch(tabId) {
+            stopAudio();
+            switchTab(tabId);
+        }
+
+        // ================= AUDIO READER (WEB SPEECH API) =================
+        let speechSynth = window.speechSynthesis;
+        let speechUtterance = null;
+        let speechRate = 1.0;
+
+        function updateRate(val) {
+            speechRate = parseFloat(val);
+            const label = document.getElementById('speed-label');
+            if(label) label.innerText = speechRate.toFixed(1) + 'x';
+            if(speechSynth && speechSynth.speaking && !speechSynth.paused) {
+                playAudio(); 
+            }
+        }
+
+        function playAudio() {
+            if(!speechSynth) {
+                alert('Browser Anda tidak mendukung fitur Audio Reader.');
+                return;
+            }
+
+            if(speechSynth.paused && speechUtterance) {
+                speechSynth.resume();
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Memutar Suara...';
+                return;
+            }
+
+            speechSynth.cancel(); 
+
+            const container = document.getElementById('materi-text-container');
+            const textToRead = container ? container.innerText : "Materi akreditasi Kemenkes 2025.";
+
+            speechUtterance = new SpeechSynthesisUtterance(textToRead);
+            speechUtterance.lang = 'id-ID';
+            speechUtterance.rate = speechRate;
+
+            speechUtterance.onstart = () => {
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Memutar Suara...';
+            };
+
+            speechUtterance.onend = () => {
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Selesai Dibaca';
+            };
+
+            speechUtterance.onerror = () => {
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Gagal Memutar';
+            };
+
+            speechSynth.speak(speechUtterance);
+        }
+
+        function pauseAudio() {
+            if(speechSynth && speechSynth.speaking) {
+                speechSynth.pause();
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Dijeda (Paused)';
+            }
+        }
+
+        function stopAudio() {
+            if(speechSynth) {
+                speechSynth.cancel();
+                const statusEl = document.getElementById('audio-status');
+                if(statusEl) statusEl.innerText = 'Siap Ditekan';
+            }
+        }
+
+        // ================= FLASHCARD RECALL (20 KARTU - FIXED 3D FLIP) =================
+        const flashcardData = [
+            { q: "Apa dasar hukum utama penerbitan Pedoman Akreditasi Lembaga Pelatihan 2025?", a: "Undang-Undang Nomor 17 Tahun 2023 tentang Kesehatan Pasal 258 dan Peraturan Pemerintah Nomor 28 Tahun 2024 Pasal 669." },
+            { q: "Berapa bobot terbesar dalam komponen penilaian akreditasi lembaga pelatihan?", a: "Komponen Pelayanan Pelatihan sebesar 55% (Kurikulum 25% dan SDM 30%)." },
+            { q: "Sebutkan 4 unsur SDM wajib dalam komponen pelayanan pelatihan!", a: "1. Pimpinan\n2. Penyelenggara Pelatihan\n3. Pelatih\n4. Pengelola Sistem Informasi." },
+            { q: "Apa fungsi utama aplikasi SIAKSI dalam ekosistem akreditasi Kemenkes?", a: "Sistem Informasi Akreditasi Institusi untuk pendaftaran akun lembaga, pengajuan permohonan, dan unggah dokumen bukti." },
+            { q: "Berapa batas waktu SLA bagi Tim Sekretariat untuk verifikasi dokumen?", a: "Paling lambat 7 (tujuh) hari kerja setelah dokumen diunggah." },
+            { q: "Berapa rentang nilai untuk mendapatkan status Akreditasi Paripurna?", a: "Rentang nilai 89,00 - 100 dengan masa berlaku sertifikat selama 5 tahun." },
+            { q: "Apa aturan mutlak terkait pencantuman harga atau diskon pada flyer promosi?", a: "Dilarang keras mengiklankan promosi berupa potongan harga (diskon) maupun imbalan dalam bentuk apapun." },
+            { q: "Aturan apa yang mengatur rekening pembayaran pendaftaran pelatihan?", a: "Dilarang menggunakan rekening pribadi; wajib menggunakan rekening resmi lembaga pelatihan atau institusi mitra kerja sama." },
+            { q: "Berapa kali minimal lembaga terakreditasi wajib menyelenggarakan pelatihan gratis dalam setahun?", a: "Minimal 2 (dua) kali dalam setahun (menyumbang 10% tambahan nilai penunjang)." },
+            { q: "Apa sanksi jika lembaga mendapatkan skor evaluasi 0% - 30,99% (warna hitam)?", a: "Sanksi berupa pembekuan akun Plataran Sehat atau pencabutan status akreditasi lembaga." },
+            { q: "Apa kepanjangan dan fungsi dari aplikasi SIAKPEL?", a: "Sistem Informasi Akreditasi Pelatihan, digunakan untuk registrasi kegiatan pelatihan (H-3) dan peningkatan kompetensi (H-30)." },
+            { q: "Di mana posisi peletakan logo Kementerian Kesehatan pada flyer promosi?", a: "Wajib diletakkan di sebelah kiri atas media publikasi." },
+            { q: "Apa peran dari Tim Penilai Akhir (TPA) dalam sidang akreditasi?", a: "Menetapkan nilai dan memutuskan hasil penilaian akreditasi lembaga berdasarkan berita acara asesor." },
+            { q: "Berapa batas maksimal institusional fee kerja sama pelatihan untuk 1-100 peserta (Tabel 2)?", a: "Maksimal sebesar Rp500.000 per kegiatan (diluar honor narasumber dan sewa alat)." },
+            { q: "Apa persyaratan pendidikan minimal untuk posisi Pimpinan Lembaga Pelatihan?", a: "Pendidikan minimal S2 serta berpengalaman/mengikuti pelatihan manajemen atau MOT (Management of Training)." },
+            { q: "Berapa lama masa berlaku sertifikat akreditasi lembaga pelatihan Kemenkes?", a: "Berlaku selama 5 (lima) tahun sejak tanggal ditetapkan." },
+            { q: "Apa yang dimaksud dengan Audit Mutu Internal (AMI)?", a: "Proses pengukuran dan penilaian sistematik yang dilakukan Tim AMI internal untuk memastikan penerapan penjaminan mutu." },
+            { q: "Bagaimana ketentuan penyelenggaraan skala Internasional bagi lembaga akreditasi Madya?", a: "Lembaga Madya dapat menyelenggarakan kegiatan skala internasional wajib bekerja sama dengan lembaga terakreditasi Paripurna." },
+            { q: "Apa sanksi di SIAKSI jika persentase evaluasi berada di zona warna Kuning (71% - 90,99%)?", a: "Lembaga akan diberikan sanksi berupa Surat Peringatan 1 (SP1)." },
+            { q: "Apa fokus utama Audit Surveilans yang dilakukan oleh Direktorat Mutu SDM Kesehatan?", a: "Pemantauan untuk memastikan masing-masing komponen akreditasi diterapkan pada proses kegiatan secara berkesinambungan." }
+        ];
+
+        let fcIndex = 0;
+
+        function renderFlashcard() {
+            const inner = document.getElementById('fc-inner');
+            if(inner) inner.classList.remove('is-flipped');
+            
+            const frontText = document.getElementById('fc-front-text');
+            const backText = document.getElementById('fc-back-text');
+            const counter = document.getElementById('fc-counter');
+
+            if(frontText) frontText.innerText = flashcardData[fcIndex].q;
+            if(backText) backText.innerHTML = flashcardData[fcIndex].a.replace(/\n/g, '<br>');
+            if(counter) counter.innerText = `Kartu ${fcIndex + 1} dari ${flashcardData.length}`;
+        }
+
+        function flipCard() {
+            const inner = document.getElementById('fc-inner');
+            if(inner) inner.classList.toggle('is-flipped');
+        }
+
+        function nextCard() {
+            fcIndex = (fcIndex + 1) % flashcardData.length;
+            renderFlashcard();
+        }
+
+        function prevCard() {
+            fcIndex = (fcIndex - 1 + flashcardData.length) % flashcardData.length;
+            renderFlashcard();
+        }
+
+        // ================= KUIS KILAT (35 SOAL BAB I - VIII) =================
+        const quizData = [
+            { q: "Berapakah bobot penilaian untuk komponen Pelayanan Pelatihan dalam instrumen akreditasi?", options: ["15%", "30%", "55%", "100%"], answer: 2, explanation: "Komponen Pelayanan Pelatihan adalah komponen utama dengan bobot tertinggi yaitu 55%." },
+            { q: "Berapakah bobot penilaian untuk komponen Administrasi dan Manajemen?", options: ["15%", "30%", "55%", "25%"], answer: 1, explanation: "Komponen Administrasi dan Manajemen memiliki bobot 30%." },
+            { q: "Berapakah bobot penilaian untuk komponen Pelayanan Penunjang Pelatihan?", options: ["15%", "30%", "55%", "10%"], answer: 0, explanation: "Komponen Pelayanan Penunjang Pelatihan (sarana prasarana minimal) memiliki bobot 15%." },
+            { q: "Level akreditasi apakah yang memberikan rentang nilai 89,00 hingga 100?", options: ["Akreditasi Dasar", "Akreditasi Madya", "Akreditasi Paripurna", "Tidak Terakreditasi"], answer: 2, explanation: "Akreditasi Paripurna berada di rentang nilai 89,00 - 100 dengan masa berlaku 5 tahun." },
+            { q: "Berapakah rentang nilai untuk status Akreditasi Madya?", options: ["67,00 - 77,99", "78,00 - 88,99", "89,00 - 100", "Di bawah 66,99"], answer: 1, explanation: "Akreditasi Madya berada di rentang nilai 78,00 hingga 88,99." },
+            { q: "Melalui portal apakah lembaga wajib mengajukan permohonan akun dan dokumen akreditasi?", options: ["SIAKPEL", "SIAKSI", "Plataran Sehat", "SatuSehat SDMK"], answer: 1, explanation: "Pengajuan akreditasi institusi dilakukan melalui portal SIAKSI (siaksi.kemkes.go.id)." },
+            { q: "Manakah ketentuan yang BENAR terkait pencantuman harga/biaya pada flyer promosi pelatihan?", options: ["Boleh memberikan diskon khusus", "Dilarang mengiklankan promosi berupa potongan harga (diskon)", "Bebas promosi berhadiah", "Boleh mencantumkan harga coret"], answer: 1, explanation: "Bab VI menegaskan biaya pendaftaran dilarang keras mengiklankan promosi berupa potongan harga atau diskon." },
+            { q: "Jika hasil evaluasi lembaga masuk dalam zona warna KUNING (71 - 90,99%), sanksi apa yang diberikan?", options: ["Tidak ada sanksi", "Surat Peringatan 1 (SP1)", "Surat Peringatan 2 (SP2)", "Pencabutan Akreditasi"], answer: 1, explanation: "Warna kuning pada akun SIAKSI menandakan lembaga mendapat sanksi SP1." },
+            { q: "Berapa lama SLA bagi Tim Sekretariat Kemenkes dalam memverifikasi dokumen akreditasi awal?", options: ["2 hari kerja", "3 hari kerja", "5 hari kerja", "7 hari kerja"], answer: 3, explanation: "Tim Sekretariat melakukan verifikasi kelengkapan dokumen paling lambat 7 hari kerja." },
+            { q: "Unsur baru apakah yang secara eksplisit wajib ada di dalam komponen SDM Pelayanan Pelatihan?", options: ["Ahli Keuangan", "Pengelola Sistem Informasi", "Humas Protokoler", "Tenaga Medis Senior"], answer: 1, explanation: "Komponen SDM Pelayanan Pelatihan mewajibkan 4 unsur: Pimpinan, Penyelenggara, Pelatih, dan Pengelola Sistem Informasi." },
+            { q: "Berapa persentase tambahan nilai penunjang jika lembaga melaksanakan kewajiban pelatihan gratis 2x setahun?", options: ["5%", "10%", "15%", "20%"], answer: 1, explanation: "Melaksanakan pembelajaran gratis minimal 2 kali setahun memberikan penambahan nilai sebesar 10%." },
+            { q: "Di manakah posisi peletakan logo instansi/lembaga penyelenggara terakreditasi pada flyer?", options: ["Di sebelah kanan atas", "Di sebelah logo Kementerian Kesehatan", "Di bagian paling bawah flyer", "Di tengah latar belakang"], answer: 1, explanation: "Logo lembaga terakreditasi diletakkan di sebelah kanan/samping logo Kementerian Kesehatan yang berada di kiri atas." },
+            { q: "Berapa batasan waktu pengajuan registrasi kegiatan peningkatan kompetensi (seperti webinar) sebelum acara?", options: ["Minimal H-3", "Minimal H-7", "Minimal 14 hari", "Minimal 30 hari"], answer: 3, explanation: "Pengajuan kegiatan peningkatan kompetensi bidang kesehatan wajib dilakukan minimal 30 hari sebelum kegiatan dilaksanakan." },
+            { q: "Berapakah rentang nilai untuk status Akreditasi Dasar?", options: ["67,00 - 77,99", "78,00 - 88,99", "Di bawah 66,99", "90 - 100"], answer: 0, explanation: "Akreditasi Dasar berada di rentang nilai 67,00 hingga 77,99." },
+            { q: "Apa sanksi di SIAKSI jika lembaga berada di zona warna HITAM (0% - 40,99%)?", options: ["Teguran lisan", "SP 1", "Pembekuan akun Plataran Sehat / Pencabutan Akreditasi", "Penurunan level saja"], answer: 2, explanation: "Warna hitam adalah sanksi terberat berupa pembekuan akun atau pencabutan status akreditasi." },
+            { q: "Kapan waktu registrasi untuk kegiatan Pelatihan regular dilakukan?", options: ["H-3 sebelum kegiatan", "H-30 sebelum kegiatan", "Saat hari H kegiatan", "H-1 tahun"], answer: 0, explanation: "Waktu untuk meregistrasikan kegiatan pelatihan dapat dilakukan H-3 sebelum pelaksanaan." },
+            { q: "Apa fungsi utama Audit Mutu Internal (AMI) bagi lembaga?", options: ["Pemeriksaan keuangan pajak", "Pengukuran dan penilaian sistematik penerapan sistem manajemen mutu", "Menilai bangunan fisik rumah sakit", "Ujian kompetensi dokter"], answer: 1, explanation: "AMI adalah audit internal untuk memastikan seluruh komponen akreditasi diterapkan berkesinambungan." },
+            { q: "Apa aturan nomor rekening dalam publikasi flyer pelatihan?", options: ["Boleh menggunakan rekening pribadi panitia", "Wajib menggunakan rekening resmi lembaga terakreditasi", "Boleh pakai dompet digital pribadi", "Tidak perlu dicantumkan rekening"], answer: 1, explanation: "Nomor rekening wajib menggunakan rekening resmi lembaga, dilarang keras menggunakan rekening pribadi." },
+            { q: "Berapakah batas maksimal institusional fee kerja sama pelatihan untuk kelompok 101-200 peserta (Tabel 2)?", options: ["Rp500.000", "Rp1.000.000", "Rp1.500.000", "Rp2.000.000"], answer: 1, explanation: "Batas maksimal biaya kerja sama untuk 101-200 peserta adalah Rp1.000.000." },
+            { q: "Undang-undang apakah yang menjadi landasan hukum utama peningkatan mutu nakes dalam Kepdirjen ini?", options: ["UU No. 36 Tahun 2014", "UU No. 17 Tahun 2023 tentang Kesehatan", "UU ASN No. 20 Tahun 2023", "UU Rumah Sakit No. 44 Tahun 2009"], answer: 1, explanation: "Mengacu pada UU No. 17 Tahun 2023 Pasal 258 tentang Kesehatan." },
+            { q: "Siapa pihak yang menandatangani Berita Acara hasil penilaian bersama Tim Asesor di lokasi?", options: ["Direktur Jenderal SDMK", "Kepala / Pimpinan Lembaga Pelatihan", "Ketua Tim Penilai Akhir", "Menteri Kesehatan"], answer: 1, explanation: "Berita acara penilaian ditandatangani oleh tim asesor dan kepala/pimpinan lembaga pelatihan." },
+            { q: "Berapa lama batas pengajuan keberatan (banding) setelah SK akreditasi diterbitkan?", options: ["1 minggu", "2 minggu", "1 bulan", "3 bulan"], answer: 2, explanation: "Surat keberatan diajukan paling lambat 1 bulan setelah SK diterbitkan dengan melampirkan dokumen pendukung." },
+            { q: "Apa nama aplikasi LMS resmi Kemenkes tempat pengelolaan kelas dan evaluasi peserta?", options: ["Plataran Sehat", "SIAKSI", "E-Kemenkes", "Samsat nakes"], answer: 0, explanation: "Plataran Sehat adalah LMS resmi Kemenkes untuk pengelolaan pembelajaran, kuota, dan evaluasi." },
+            { q: "Berapakah bobot penilaian untuk aspek Kepatuhan Administrasi dalam pemantauan per kegiatan (Tabel 6)?", options: ["20%", "40%", "60%", "100%"], answer: 2, explanation: "Aspek Kepatuhan Administrasi memiliki bobot 60% (flyer 30% dan registrasi/pengelolaan 30%)." },
+            { q: "Berapakah bobot penilaian untuk aspek Kepuasan Pelanggan dalam pemantauan per kegiatan (Tabel 6)?", options: ["20%", "40%", "60%", "80%"], answer: 1, explanation: "Aspek Kepuasan Pelanggan memiliki bobot 40% (kualitas pengajar, materi, dan kelola)." },
+            { q: "Berapa lama masa berlaku sertifikat akreditasi lembaga pelatihan berdasarkan Kepdirjen SDMK 2025?", options: ["1 Tahun", "3 Tahun", "5 Tahun", "Selamanya"], answer: 2, explanation: "Semua level akreditasi (Paripurna, Madya, Dasar) memiliki masa berlaku selama 5 tahun." },
+            { q: "Apa nama sistem informasi untuk pendaftaran akun dan pengajuan akreditasi institusi?", options: ["SIAKSI", "SIAKPEL", "Plataran Sehat", "SatuSehat"], answer: 0, explanation: "SIAKSI adalah Sistem Informasi Akreditasi Institusi untuk pendaftaran dan pengajuan permohonan akreditasi." },
+            { q: "Apa sanksi di SIAKSI jika persentase evaluasi berada di zona warna MERAH (41% - 50,99%)?", options: ["SP1", "SP2", "Penurunan Level Akreditasi", "Pencabutan Akreditasi"], answer: 2, explanation: "Skor kumulatif 41% - 50,99% (warna merah) dikenakan sanksi berupa penurunan level akreditasi." },
+            { q: "Apa bentuk sanksi pertama kali yang dikenakan jika lembaga melakukan pelanggaran ringan (Teguran Lisan)?", options: ["SP 1", "Pencabutan akreditasi", "Pembekuan akun", "Denda uang"], answer: 0, explanation: "Teguran lisan diberikan paling banyak 1 kali dan didokumentasikan dalam bentuk Surat Peringatan pertama (SP1)." },
+            { q: "Berapakah maksimal institusional fee kerja sama untuk kelompok 201-300 peserta (Tabel 2)?", options: ["Rp500.000", "Rp1.000.000", "Rp1.500.000", "Rp2.000.000"], answer: 2, explanation: "Batas maksimal biaya kerja sama untuk 201-300 peserta adalah Rp1.500.000." },
+            { q: "Siapa penanggung jawab Tim Sekretariat Akreditasi Lembaga di Pusat?", options: ["Direktur Jenderal SDMK", "Direktur Mutu SDM Kesehatan", "Menteri Kesehatan", "Ketua Asesor"], answer: 1, explanation: "Penanggung jawab Tim Sekretariat adalah Direktur Mutu SDM Kesehatan." },
+            { q: "Apa persyaratan pendidikan minimal untuk pimpinan lembaga pelatihan?", options: ["S1", "S2", "S3", "Diploma III"], answer: 1, explanation: "Persyaratan kualifikasi pimpinan lembaga pelatihan adalah pendidikan minimal S2 serta mengikuti pelatihan manajemen/MOT." },
+            { q: "Apa fungsi dari Audit Surveilans oleh Direktorat Mutu SDM Kesehatan?", options: ["Memeriksa keuangan lembaga", "Pemantauan penerapan komponen akreditasi secara berkesinambungan", "Menilai fisik bangunan rumah sakit", "Menguji kompetensi dokter"], answer: 1, explanation: "Audit surveilans adalah pemantauan untuk memastikan komponen akreditasi diterapkan secara berkesinambungan." },
+            { q: "Berapa lama jangka waktu pembekuan sementara akun Plataran Sehat jika lembaga melanggar ketentuan berat?", options: ["1 bulan", "3 bulan", "6 atau 12 bulan", "2 tahun"], answer: 2, explanation: "Sanksi pembekuan sementara akun Plataran Sehat diberlakukan selama 6 atau 12 bulan sesuai tingkat pelanggaran." },
+            { q: "Apa nama dokumen penjaminan mutu internal yang wajib dimiliki dan diterapkan oleh lembaga?", options: ["Panduan Mutu dan AMI", "Buku Kas Umum", "Profil Rumah Sakit", "Sertifikat ISO 9001 umum"], answer: 0, explanation: "Lembaga wajib memiliki Panduan Mutu dan melaksanakan Audit Mutu Internal (AMI)." }
+        ];
+
+        let quizIndex = 0;
+        let quizScore = 0;
+        let quizTimer = null;
+        let timeLeft = 20;
+        let isAnswerLocked = false;
+
+        // Load initial High Score from localStorage and sync to UI
+        let highScore = parseInt(localStorage.getItem('akreditasi_highscore_mobile')) || 0;
+        const highScoreEl = document.getElementById('stat-high-score');
+        if(highScoreEl) highScoreEl.innerText = highScore + ' Poin';
+        updateBadgeDisplay(highScore);
+
+        function startQuiz() {
+            stopAudio();
+            quizIndex = 0;
+            quizScore = 0;
+            switchTab('quiz');
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            if(quizIndex >= quizData.length) {
+                endQuiz();
+                return;
+            }
+            isAnswerLocked = false;
+            timeLeft = 20;
+            const timerEl = document.getElementById('time-left');
+            if(timerEl) timerEl.innerText = timeLeft;
+            
+            const progEl = document.getElementById('quiz-progress');
+            if(progEl) progEl.innerText = `Soal ${quizIndex + 1} dari ${quizData.length}`;
+
+            const liveScoreEl = document.getElementById('live-score');
+            if(liveScoreEl) liveScoreEl.innerText = quizScore;
+            
+            const qObj = quizData[quizIndex];
+            const qTextEl = document.getElementById('quiz-question');
+            if(qTextEl) qTextEl.innerText = qObj.q;
+            
+            const optionsBox = document.getElementById('quiz-options');
+            if(optionsBox) {
+                optionsBox.innerHTML = '';
+                qObj.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 font-medium text-xs sm:text-sm transition flex items-center justify-between active:scale-[0.99]";
+                    btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span>`;
+                    btn.onclick = () => selectAnswer(idx);
+                    optionsBox.appendChild(btn);
+                });
+            }
+
+            const feedbackEl = document.getElementById('quiz-feedback');
+            if(feedbackEl) feedbackEl.classList.add('hidden');
+            
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if(nextBtn) nextBtn.classList.add('hidden');
+
+            clearInterval(quizTimer);
+            quizTimer = setInterval(() => {
+                timeLeft--;
+                const tEl = document.getElementById('time-left');
+                if(tEl) tEl.innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    selectAnswer(-1); // Timeout
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(selectedIndex) {
+            if(isAnswerLocked) return;
+            isAnswerLocked = true;
+            clearInterval(quizTimer);
+
+            const qObj = quizData[quizIndex];
+            const optionsBox = document.getElementById('quiz-options');
+            if(!optionsBox) return;
+            const buttons = optionsBox.children;
+            const feedbackBox = document.getElementById('quiz-feedback');
+
+            for(let i=0; i<buttons.length; i++) {
+                buttons[i].disabled = true;
+                if(i === qObj.answer) {
+                    buttons[i].className = "w-full text-left p-3 rounded-xl border border-teal-300 bg-teal-50 text-teal-900 font-semibold text-xs sm:text-sm flex items-center justify-between";
+                    buttons[i].innerHTML += `<i class="fa-solid fa-check text-teal-600"></i>`;
+                } else if(i === selectedIndex) {
+                    buttons[i].className = "w-full text-left p-3 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 font-semibold text-xs sm:text-sm flex items-center justify-between";
+                    buttons[i].innerHTML += `<i class="fa-solid fa-xmark text-rose-600"></i>`;
+                }
+            }
+
+            let pointsPerQuestion = Math.round(100 / quizData.length);
+            if(selectedIndex === qObj.answer) {
+                quizScore += pointsPerQuestion;
+                if(quizScore > 100) quizScore = 100;
+                if(feedbackBox) {
+                    feedbackBox.className = "p-3 rounded-xl text-xs mt-3 bg-teal-50 border border-teal-200 text-teal-900";
+                    feedbackBox.innerHTML = `<strong>Benar! (+${pointsPerQuestion} Poin)</strong><br>${qObj.explanation}`;
+                }
+            } else {
+                if(feedbackBox) {
+                    feedbackBox.className = "p-3 rounded-xl text-xs mt-3 bg-rose-50 border border-rose-200 text-rose-900";
+                    feedbackBox.innerHTML = `<strong>Kurang tepat.</strong><br>${qObj.explanation}`;
+                }
+            }
+            
+            const liveScoreEl = document.getElementById('live-score');
+            if(liveScoreEl) liveScoreEl.innerText = quizScore;
+
+            if(feedbackBox) feedbackBox.classList.remove('hidden');
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if(nextBtn) nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            quizIndex++;
+            loadQuizQuestion();
+        }
+
+        function endQuiz() {
+            switchTab('result');
+            const scoreEl = document.getElementById('result-score');
+            if(scoreEl) scoreEl.innerText = quizScore + ' Poin';
+            
+            // Update High Score immediately if higher
+            if(quizScore > highScore) {
+                highScore = quizScore;
+                localStorage.setItem('akreditasi_highscore_mobile', highScore);
+            }
+            const statHighEl = document.getElementById('stat-high-score');
+            if(statHighEl) statHighEl.innerText = highScore + ' Poin';
+
+            updateBadgeDisplay(highScore);
+
+            let badgeName = "Pemula Regulasi";
+            if(highScore >= 90) badgeName = "Master Akreditasi Kemenkes";
+            else if(highScore >= 75) badgeName = "Ahli Regulasi Diklat";
+            else if(highScore >= 60) badgeName = "Analis Madya Kompeten";
+
+            const badgeNameEl = document.getElementById('result-badge-name');
+            if(badgeNameEl) badgeNameEl.innerText = badgeName;
+        }
+
+        function updateBadgeDisplay(score) {
+            let badgeName = "Pemula Regulasi";
+            if(score >= 90) badgeName = "Master Akreditasi Kemenkes";
+            else if(score >= 75) badgeName = "Ahli Regulasi Diklat";
+            else if(score >= 60) badgeName = "Analis Madya Kompeten";
+            const statBadgeEl = document.getElementById('stat-badge');
+            if(statBadgeEl) statBadgeEl.innerText = badgeName;
+        }
+    </script>
+</body>
+</html>
